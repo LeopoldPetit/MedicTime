@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#2D3C3B"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".controllers.MainActivity">
 
     <TextView
         android:id="@+id/PageTitle"
