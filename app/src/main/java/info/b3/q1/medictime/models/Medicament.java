@@ -4,12 +4,12 @@ import java.util.UUID;
 
 public class Medicament {
     protected java.util.UUID mId;
-    protected String mName;
-    protected Integer mDuree;
+    public String mName;
+    public Integer mDuree;
 
-    protected Boolean mMatin;
-    protected Boolean mMidi;
-    protected Boolean mSoir;
+    public Boolean mMatin;
+    public Boolean mMidi;
+    public Boolean mSoir;
 
     public Medicament() {
         this(UUID.randomUUID());
@@ -43,7 +43,7 @@ public class Medicament {
         mDuree = duree;
     }
 
-    public Boolean getMatin() {
+    public Boolean isMatin() {
         return mMatin;
     }
 
@@ -51,7 +51,7 @@ public class Medicament {
         mMatin = matin;
     }
 
-    public Boolean getMidi() {
+    public Boolean isMidi() {
         return mMidi;
     }
 
@@ -59,7 +59,7 @@ public class Medicament {
         mMidi = midi;
     }
 
-    public Boolean getSoir() {
+    public Boolean isSoir() {
         return mSoir;
     }
 

@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/pageTitle"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_marginTop="16dp"
@@ -17,9 +16,15 @@
         android:textColor="@color/white"
         android:textSize="30sp" />
 
-    <LinearLayout
-        android:id="@+id/Calendrier_Medoc"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/prises_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

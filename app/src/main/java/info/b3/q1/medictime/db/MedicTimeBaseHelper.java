@@ -2,8 +2,9 @@ package info.b3.q1.medictime.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import info.b3.q1.medictime.db.MedicTimeDbSchema.*;
-public class MedicTimeBaseHelper {
+public class MedicTimeBaseHelper  extends SQLiteOpenHelper{
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "database.db";
     public MedicTimeBaseHelper(Context context) {

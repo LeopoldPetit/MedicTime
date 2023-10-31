@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#2D3C3B"
     android:orientation="vertical"
-    tools:context=".controllers.MainActivity">
+    >
 
     <TextView
         android:id="@+id/PageTitle"
@@ -33,11 +33,17 @@
         android:textColor="@color/white"
         android:textSize="24sp" />
 
-    <Spinner
-        android:id="@+id/MedocSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
-        android:layout_marginTop="8dp" />
+    <ScrollView
+        android:id="@+id/medoc_container"
+        android:layout_width="match_parent"
+        android:layout_height="111dp" >
+
+        <LinearLayout
+            android:id="@+id/medoc_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/Date_Text"
@@ -56,7 +62,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edit_End_Text_Date"
+            android:id="@+id/edit_Start_Text_Date"
             android:layout_width="wrap_content"
             android:layout_height="73dp"
             android:layout_weight="1"
@@ -65,7 +71,7 @@
             android:text="date" />
 
         <EditText
-            android:id="@+id/edit_Start_Text_Date"
+            android:id="@+id/edit_End_Text_Date"
             android:layout_width="wrap_content"
             android:layout_height="73dp"
             android:layout_weight="1"

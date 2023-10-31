@@ -51,7 +51,7 @@ public class Prise {
         mFin = fin;
     }
 
-    public Boolean getMatin() {
+    public Boolean isMatin() {
         return mMatin;
     }
 
@@ -59,7 +59,7 @@ public class Prise {
         mMatin = matin;
     }
 
-    public Boolean getMidi() {
+    public Boolean isMidi() {
         return mMidi;
     }
 
@@ -67,7 +67,7 @@ public class Prise {
         mMidi = midi;
     }
 
-    public Boolean getSoir() {
+    public Boolean isSoir() {
         return mSoir;
     }
 
