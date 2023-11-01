@@ -12,7 +12,7 @@ public abstract class SingleFragmentMedocActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_medoc_page);
+        setContentView(R.layout.medoc_page);
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
         if(fragment==null) {

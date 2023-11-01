@@ -33,6 +33,11 @@ public class PriseFragment extends androidx.fragment.app.Fragment{
         mPrise = PrisesListe.get(getContext()).getPrise(prise_id);
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        AfficherMedoc();
+    }
     public void AfficherMedoc() {
 
         mContainer.removeAllViews();
@@ -45,7 +50,19 @@ public class PriseFragment extends androidx.fragment.app.Fragment{
     private View getMedocView(Medicament medicament) {
         TextView textView = new TextView(this.getContext());
         textView.setText(medicament.getName());
+        setClickOnMedocView(medicament, textView);
         return textView;
+    }
+    private void setClickOnMedocView(final Medicament medicament, View textView) {
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),
+                        MedocActivity.class);
+                intent.putExtra(MedocFragment.MEDOC_ID, medicament.getId());
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -54,7 +71,7 @@ public class PriseFragment extends androidx.fragment.app.Fragment{
     @Override
     public android.view.View onCreateView(@androidx.annotation.NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup container, @Nullable android.os.Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        android.view.View v = inflater.inflate(R.layout.add_prises_fragment, container, false);
+        android.view.View v = inflater.inflate(R.layout.prise_fragment, container, false);
         mDebut = (EditText) v.findViewById(R.id.edit_Start_Text_Date);
         mFin = (EditText) v.findViewById(R.id.edit_End_Text_Date);
         mMatin = (CheckBox) v.findViewById(R.id.Matin_CheckBox);

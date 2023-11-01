@@ -34,12 +34,17 @@ public class MedocFragment  extends androidx.fragment.app.Fragment {
     @Override
     public View onCreateView(@androidx.annotation.NonNull android.view.LayoutInflater inflater, @Nullable android.view.ViewGroup container, @Nullable android.os.Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.add_medoc_fragment, container, false);
+        View v = inflater.inflate(R.layout.medoc_fragment, container, false);
         mNom = (EditText) v.findViewById(R.id.editNameText);
         mDuree = (EditText) v.findViewById(R.id.editDefaultDurée);
         mMatin = (CheckBox) v.findViewById(R.id.Matin_CheckBox);
         mMidi = (CheckBox) v.findViewById(R.id.Midi_CheckBox);
         mSoir = (CheckBox) v.findViewById(R.id.Soir_CheckBox);
+        mNom.setText(mMedicament.getName());
+        mDuree.setText(java.lang.Integer.toString(mMedicament.getDuree()));
+        mMatin.setChecked(mMedicament.isMatin());
+        mMidi.setChecked(mMedicament.isMidi());
+        mSoir.setChecked(mMedicament.isSoir());
 
 
 
