@@ -31,7 +31,6 @@ public class MedicTimeActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
