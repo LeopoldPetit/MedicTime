@@ -1,5 +1,11 @@
 package info.b3.q1.medictime.models;
 
+import android.os.Build;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Prise {
@@ -73,5 +79,34 @@ public class Prise {
 
     public void setSoir(Boolean soir) {
         mSoir = soir;
+    }
+    public List<String> getTousLesJours() {
+        List<String> jours = new ArrayList<>();
+
+        // Utiliser DateTimeFormatter pour le format "yy/MM/dd"
+        DateTimeFormatter formatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
+        }
+
+        // Convertir les chaînes de dates en objets LocalDate
+        LocalDate dateDebut = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dateDebut = LocalDate.parse(mDebut, formatter);
+        }
+        LocalDate dateFin = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dateFin = LocalDate.parse(mFin, formatter);
+        }
+
+        // Ajouter tous les jours entre dateDebut et dateFin à la liste
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            while (!dateDebut.isAfter(dateFin)) {
+                jours.add(dateDebut.format(formatter));
+                dateDebut = dateDebut.plusDays(1); // Ajouter un jour
+            }
+        }
+
+        return jours;
     }
 }
