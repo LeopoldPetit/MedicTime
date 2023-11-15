@@ -3,43 +3,52 @@ package info.b3.q1.medictime.controllers;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import info.b3.q1.medictime.R;
+import info.b3.q1.medictime.models.MedocListe;
 import info.b3.q1.medictime.models.Prise;
 import info.b3.q1.medictime.models.PrisesListe;
 
 public class MedicTimeActivity extends AppCompatActivity {
     private LinearLayout mContainer;
-    private LinearLayout mMatinContainer;
-    private LinearLayout mMidiContainer;
-    private LinearLayout mSoirContainer;
+    private Button mAddButton;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medic_time_page);
+        mAddButton = (Button) findViewById(R.id.add_button);
+        setClickOnAddButton(mAddButton);
         mContainer = (LinearLayout) findViewById(R.id.prises_layout_container);
         updateUI();
     }
     private void updateUI() {
         mContainer.removeAllViews();
         PrisesListe lab = PrisesListe.get(this);
-        for (String jour : lab.getTousLesJoursPossibles()) {
+        List<String> JoursTriees = sortAndFilterDates(lab.getTousLesJoursPossibles());
+        for (String jour : JoursTriees) {
             List<Prise> prises = lab.getPrisesByJour(jour);
             View jourFrag = getLayoutInflater().inflate(R.layout.list_prise_fragment, null);
             ((TextView) jourFrag.findViewById(R.id.jour_Text)).setText(jour);
-
-            // Initialiser les conteneurs à l'intérieur de jourFrag
             LinearLayout matinContainer = jourFrag.findViewById(R.id.matin_container);
             LinearLayout midiContainer = jourFrag.findViewById(R.id.midi_container);
             LinearLayout soirContainer = jourFrag.findViewById(R.id.soir_container);
@@ -48,27 +57,16 @@ public class MedicTimeActivity extends AppCompatActivity {
             soirContainer.removeAllViews();
 
             for (final Prise prise : prises) {
-                // Utiliser les conteneurs existants dans jourFrag
                 if (prise.isMatin()) {
-                    TextView textView = new TextView(this);
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                    textView.setText(prise.getMedocId().toString());
-                    matinContainer.addView(textView);
+                    matinContainer.addView(getPriseView(prise));
                 }
                 if (prise.isMidi()) {
-                    TextView textView = new TextView(this);
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                    textView.setText(prise.getMedocId().toString());
-                    midiContainer.addView(textView);
+                    midiContainer.addView(getPriseView(prise));
                 }
                 if (prise.isSoir()) {
-                    TextView textView = new TextView(this);
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                    textView.setText(prise.getMedocId().toString());
-                    soirContainer.addView(textView);
+                    soirContainer.addView(getPriseView(prise));
                 }
             }
-
             mContainer.addView(jourFrag);
         }
     }
@@ -81,20 +79,58 @@ public class MedicTimeActivity extends AppCompatActivity {
 
     private View getPriseView(Prise prise) {
         TextView textView = new TextView(getApplicationContext());
-        textView.setText("prise: Début: " + prise.getDebut() +" Fin: " + prise.getFin() );
-        setClickOnPriseView(prise, textView);
+        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+        MedocListe lab = MedocListe.get(this);
+        String medocName= lab.getMedocName(prise.getMedocId());
+        textView.setText(medocName);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        textView.setTypeface(null, Typeface.BOLD);
+
         return textView;
     }
-    private void setClickOnPriseView(final Prise prise, View textView) {
-        textView.setOnClickListener(new View.OnClickListener() {
+
+    private void setClickOnAddButton(View addButton) {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),
                         PriseActivity.class);
-                intent.putExtra(PriseFragment.PRISE_ID, prise.getId());
                 startActivity(intent);
             }
         });
+    }
+    public static List<String> sortAndFilterDates(List<String> dates) {
+        DateTimeFormatter formatter;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        } else {
+            formatter = null;
+        }
+        LocalDate currentDate;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            currentDate = LocalDate.now();
+        } else {
+            currentDate = null;
+        }
+        List<LocalDate> localDateList = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            localDateList = dates.stream()
+                    .map(date -> LocalDate.parse(date, formatter))
+                    .filter(date -> !date.isBefore(currentDate)) // Filtrer les dates antérieures
+                    .collect(Collectors.toList());
+        }
+        Collections.sort(localDateList);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return localDateList.stream()
+                    .map(date -> date.format(formatter))
+                    .collect(Collectors.toList());
+        }
+        else {
+            return null;
+        }
     }
 
 }

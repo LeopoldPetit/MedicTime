@@ -3,9 +3,9 @@
     <string name="add_prise_page_title">Ajout Prises de Médicament</string>
     <string name="medoc_text">Médicament:</string>
     <string name="date_text">Dates:</string>
-    <string name="matin_text">Matin</string>
-    <string name="midi_text">Midi</string>
-    <string name="soir_text">Soir</string>
+    <string name="matin_text">Matin:</string>
+    <string name="midi_text">Midi:</string>
+    <string name="soir_text">Soir:</string>
     <string name="nom_text">Nom:</string>
     <string name="ajouter_button">Ajouter</string>
     <string name="default_time_text">Durée par Défaut:</string>

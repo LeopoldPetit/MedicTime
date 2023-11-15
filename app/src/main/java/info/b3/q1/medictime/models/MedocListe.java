@@ -39,7 +39,21 @@ public class MedocListe {
                 new String[]{uuidString});
     }
 
-    public Medicament getMedoc(UUID id) {
+    public void deleteAllMedocs() {
+        mDatabase.delete(MedicTimeDbSchema.MedicamentTable.NAME, null, null);
+    }
+
+    public boolean doesIdAvailable(int idToCheck) {
+        List<Medicament> medocs = getMedocs();
+
+        for (Medicament medoc : medocs) {
+            if (medoc.getId() == idToCheck) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public String getMedocName(Integer id) {
         MedicTimeCursorWrapper cursor =
                 queryMedocs(MedicTimeDbSchema.MedicamentTable.cols.UUID + " = ? ",
                         new String[]{id.toString()}
@@ -48,7 +62,7 @@ public class MedocListe {
             if (cursor.getCount() == 0)
                 return null;
             cursor.moveToFirst();
-            return cursor.getMedicament();
+            return cursor.getMedicament().getName();
         } finally {
             cursor.close();
         }

@@ -3,7 +3,7 @@ package info.b3.q1.medictime.models;
 import java.util.UUID;
 
 public class Medicament {
-    protected java.util.UUID mId;
+    protected Integer mId;
     public String mName;
     public Integer mDuree;
 
@@ -12,7 +12,7 @@ public class Medicament {
     public Boolean mSoir;
 
     public Medicament() {
-        this(UUID.randomUUID());
+        this.mId = 0;
         this.mName = "Nom par Défaut";
         this.mDuree=10;
         this.mMatin = false;
@@ -20,10 +20,10 @@ public class Medicament {
         this.mSoir = false;
 
     }
-    public Medicament(UUID id) {
+    public Medicament(Integer id) {
         mId = id;
     }
-    public UUID getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -65,5 +65,9 @@ public class Medicament {
 
     public void setSoir(Boolean soir) {
         mSoir = soir;
+    }
+
+    public void setId(int i) {
+        mId = i;
     }
 }

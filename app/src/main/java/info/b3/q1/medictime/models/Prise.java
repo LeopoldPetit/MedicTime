@@ -18,7 +18,7 @@ public class Prise {
     protected Boolean mSoir;
     public Prise() {
         this(UUID.randomUUID());
-        this.mMedocId = 0;
+        this.mMedocId =0 ;
         this.mDebut="20/10/23";
         this.mFin="30/10/23";
         this.mMatin = false;
@@ -109,4 +109,6 @@ public class Prise {
 
         return jours;
     }
+
+
 }

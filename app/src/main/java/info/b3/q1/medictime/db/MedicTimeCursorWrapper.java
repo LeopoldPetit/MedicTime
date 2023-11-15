@@ -15,8 +15,8 @@ public class MedicTimeCursorWrapper extends CursorWrapper {
     }
 
     public Medicament getMedicament(){
-        String uuidString =
-                getString(getColumnIndex(MedicTimeDbSchema.MedicamentTable.cols.UUID));
+        Integer id =
+                Integer.valueOf(getString(getColumnIndex(MedicTimeDbSchema.MedicamentTable.cols.UUID)));
         String name =
                 getString(getColumnIndex(MedicTimeDbSchema.MedicamentTable.cols.NOM));
         Integer duree =
@@ -27,7 +27,7 @@ public class MedicTimeCursorWrapper extends CursorWrapper {
                 getInt(getColumnIndex(MedicTimeDbSchema.MedicamentTable.cols.MIDI));
         int isSoir =
                 getInt(getColumnIndex(MedicTimeDbSchema.MedicamentTable.cols.SOIR));
-        Medicament medicament = new Medicament(UUID.fromString(uuidString));
+        Medicament medicament = new Medicament(id);
         medicament.setName(name);
         medicament.setDuree(duree);
         medicament.setMatin(isMatin!=0);

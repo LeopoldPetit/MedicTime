@@ -3,6 +3,7 @@ package info.b3.q1.medictime.controllers;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -21,13 +22,35 @@ public class MedocFragment  extends androidx.fragment.app.Fragment {
     private CheckBox mMatin;
     private CheckBox mMidi;
     private CheckBox mSoir;
+    private Button mAddButton;
 
     @Override
     public void onCreate(@androidx.annotation.Nullable android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // mMedicament = new Medicament();
-        java.util.UUID medoc_id = (java.util.UUID) getActivity().getIntent().getSerializableExtra(MEDOC_ID);
-        mMedicament = MedocListe.get(getContext()).getMedoc(medoc_id);
+        createNewMedoc();
+
+    }
+    private Integer createId() {
+        return MedocListe.get(getContext()).getMedocs().size() + 2;
+    }
+    private void createNewMedoc() {
+        mMedicament = new Medicament();
+        mMedicament.setName("Medicament");
+        mMedicament.setId(createId());
+        mMedicament.setDuree(1);
+        mMedicament.setMatin(true);
+        mMedicament.setMidi(true);
+        mMedicament.setSoir(true);
+    }
+    public void setClickOnAddButton(View addButton) {
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MedocListe lab = MedocListe.get(getContext());
+                lab.addMedoc(mMedicament);
+                requireActivity().onBackPressed();
+            }
+        });
     }
 
     @Nullable
@@ -40,11 +63,13 @@ public class MedocFragment  extends androidx.fragment.app.Fragment {
         mMatin = (CheckBox) v.findViewById(R.id.Matin_CheckBox);
         mMidi = (CheckBox) v.findViewById(R.id.Midi_CheckBox);
         mSoir = (CheckBox) v.findViewById(R.id.Soir_CheckBox);
+        mAddButton = (Button) v.findViewById(R.id.Ajouter_Button);
         mNom.setText(mMedicament.getName());
         mDuree.setText(java.lang.Integer.toString(mMedicament.getDuree()));
         mMatin.setChecked(mMedicament.isMatin());
         mMidi.setChecked(mMedicament.isMidi());
         mSoir.setChecked(mMedicament.isSoir());
+        setClickOnAddButton(mAddButton);
 
 
 
