@@ -42,6 +42,7 @@ public class PriseFragment extends androidx.fragment.app.Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        AfficherMedoc();
     }
     private void createNewPrise() {
         LocalDate currentDate = null;
@@ -97,12 +98,22 @@ public class PriseFragment extends androidx.fragment.app.Fragment{
             @Override
             public void onClick(View view) {
                 mPrise.setMedocId(medicament.getId());
+                mMatin.setChecked(medicament.isMatin());
+                mMidi.setChecked(medicament.isMidi());
+                mSoir.setChecked(medicament.isSoir());
                 PrisesListe.get(getContext()).updatePrise(mPrise);
+                LocalDate currentDate = null;
 
-                // Changer la couleur du texte au clic pour le médicament sélectionné
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    currentDate = LocalDate.now();
+                    LocalDate newEndDate = currentDate.plusDays(medicament.getDuree());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formattedDate = newEndDate.format(formatter);
+                    mFin.setText(formattedDate);
+                }
+
                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
 
-                // Réinitialiser la couleur des autres médicaments
                 resetOtherMedocColors(textView);
             }
         });
